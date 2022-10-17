@@ -1,10 +1,11 @@
-module.exports = class DHTError extends Error {
-  constructor (msg, code, fn = DHTError) {
+export default class DHTError extends Error {
+  code: string;
+  constructor (msg: string, code: string, fn: () => DHTError = Object.getPrototypeOf(DHTError).constructor) {
     super(`${code}: ${msg}`)
     this.code = code
 
-    if (Error.captureStackTrace) {
-      Error.captureStackTrace(this, fn)
+    if ("captureStackTrace" in Error) {
+      (Error as unknown as { captureStackTrace: (err: Error, fn: () => DHTError) => void }).captureStackTrace(this, fn)
     }
   }
 
@@ -12,35 +13,35 @@ module.exports = class DHTError extends Error {
     return 'DHTError'
   }
 
-  static BAD_HANDSHAKE_REPLY (msg = 'Bad handshake reply') {
+  static BAD_HANDSHAKE_REPLY (msg = 'Bad handshake reply'): DHTError {
     return new DHTError(msg, 'BAD_HANDSHAKE_REPLY', DHTError.BAD_HANDSHAKE_REPLY)
   }
 
-  static BAD_HOLEPUNCH_REPLY (msg = 'Bad holepunch reply') {
+  static BAD_HOLEPUNCH_REPLY (msg = 'Bad holepunch reply'): DHTError {
     return new DHTError(msg, 'BAD_HOLEPUNCH_REPLY', DHTError.BAD_HOLEPUNCH_REPLY)
   }
 
-  static HOLEPUNCH_ABORTED (msg = 'Holepunch aborted') {
+  static HOLEPUNCH_ABORTED (msg = 'Holepunch aborted'): DHTError {
     return new DHTError(msg, 'HOLEPUNCH_ABORTED', DHTError.HOLEPUNCH_ABORTED)
   }
 
-  static HOLEPUNCH_INVALID (msg = 'Invalid holepunch payload') {
+  static HOLEPUNCH_INVALID (msg = 'Invalid holepunch payload'): DHTError {
     return new DHTError(msg, 'HOLEPUNCH_INVALID', DHTError.HOLEPUNCH_INVALID)
   }
 
-  static HOLEPUNCH_PROBE_TIMEOUT (msg = 'Holepunching probe did not finish in time') {
+  static HOLEPUNCH_PROBE_TIMEOUT (msg = 'Holepunching probe did not finish in time'): DHTError {
     return new DHTError(msg, 'HOLEPUNCH_PROBE_TIMEOUT', DHTError.HOLEPUNCH_PROBE_TIMEOUT)
   }
 
-  static HOLEPUNCH_DOUBLE_RANDOMIZED_NATS (msg = 'Both remote and local NATs are randomized') {
+  static HOLEPUNCH_DOUBLE_RANDOMIZED_NATS (msg = 'Both remote and local NATs are randomized'): DHTError {
     return new DHTError(msg, 'HOLEPUNCH_DOUBLE_RANDOMIZED_NATS', DHTError.HOLEPUNCH_DOUBLE_RANDOMIZED_NATS)
   }
 
-  static CANNOT_HOLEPUNCH (msg = 'Cannot holepunch to remote') {
+  static CANNOT_HOLEPUNCH (msg = 'Cannot holepunch to remote'): DHTError {
     return new DHTError(msg, 'CANNOT_HOLEPUNCH', DHTError.CANNOT_HOLEPUNCH)
   }
 
-  static REMOTE_NOT_HOLEPUNCHING (msg = 'Remote is not holepunching') {
+  static REMOTE_NOT_HOLEPUNCHING (msg = 'Remote is not holepunching'): DHTError {
     return new DHTError(msg, 'REMOTE_NOT_HOLEPUNCHING', DHTError.REMOTE_NOT_HOLEPUNCHING)
   }
 
@@ -76,15 +77,15 @@ module.exports = class DHTError extends Error {
     return new DHTError(msg, 'PEER_NOT_FOUND', DHTError.PEER_NOT_FOUND)
   }
 
-  static STREAM_NOT_CONNECTED (msg = 'Stream is not connected') {
-    return new DHTError(msg, 'STREAM_NOT_CONNECTED', DHTError.STREAM_DISCONNECTED)
+  static STREAM_NOT_CONNECTED (msg = 'Stream is not connected'): DHTError {
+    return new DHTError(msg, 'STREAM_NOT_CONNECTED', DHTError.STREAM_NOT_CONNECTED)
   }
 
-  static SERVER_INCOMPATIBLE (msg = 'Server is using an incompatible version') {
+  static SERVER_INCOMPATIBLE (msg = 'Server is using an incompatible version'): DHTError {
     return new DHTError(msg, 'SERVER_INCOMPATIBLE', DHTError.SERVER_INCOMPATIBLE)
   }
 
-  static SERVER_ERROR (msg = 'Server returned an error') {
+  static SERVER_ERROR (msg = 'Server returned an error'): DHTError {
     return new DHTError(msg, 'SERVER_ERROR', DHTError.SERVER_ERROR)
   }
 }

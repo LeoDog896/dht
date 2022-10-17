@@ -1,6 +1,6 @@
-const crypto = require('hypercore-crypto')
+import crypto from 'hypercore-crypto'
 
-const COMMANDS = exports.COMMANDS = {
+export const COMMANDS = {
   PEER_HANDSHAKE: 0,
   PEER_HOLEPUNCH: 1,
   FIND_PEER: 2,
@@ -13,20 +13,20 @@ const COMMANDS = exports.COMMANDS = {
   IMMUTABLE_GET: 9
 }
 
-exports.BOOTSTRAP_NODES = [
+export const BOOTSTRAP_NODES = [
   { host: 'node1.hyperdht.org', port: 49737 },
   { host: 'node2.hyperdht.org', port: 49737 },
   { host: 'node3.hyperdht.org', port: 49737 }
 ]
 
-exports.FIREWALL = {
+export const FIREWALL = {
   UNKNOWN: 0,
   OPEN: 1,
   CONSISTENT: 2,
   RANDOM: 3
 }
 
-exports.ERROR = {
+export const ERROR = {
   // noise / connection related
   NONE: 0,
   ABORTED: 1,
@@ -50,7 +50,7 @@ const [
   COMMANDS.PEER_HOLEPUNCH
 ])
 
-exports.NS = {
+export const NS = {
   ANNOUNCE: NS_ANNOUNCE,
   UNANNOUNCE: NS_UNANNOUNCE,
   MUTABLE_PUT: NS_MUTABLE_PUT,

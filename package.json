@@ -33,11 +33,13 @@
   },
   "devDependencies": {
     "brittle": "^3.0.0",
-    "standard": "^16.0.4"
+    "standard": "^16.0.4",
+    "typescript": "^4.8.4"
   },
   "scripts": {
-    "test": "standard && node test/all.js",
-    "test:generate": "brittle -r test/all.js test/*.js",
+    "build": "tsc",
+    "test": "tsc && standard && node dist/test/all.js",
+    "test:generate": "tsc && brittle -r dist/test/all.js dist/test/*.js",
     "lint": "standard"
   },
   "author": "Mathias Buus (@mafintosh)",
