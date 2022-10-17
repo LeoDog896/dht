@@ -1,4 +1,4 @@
-export default class DHTError extends Error {
+export = class DHTError extends Error {
   code: string;
   constructor (msg: string, code: string, fn: () => DHTError = Object.getPrototypeOf(DHTError).constructor) {
     super(`${code}: ${msg}`)
